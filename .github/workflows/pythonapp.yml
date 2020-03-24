@@ -31,11 +31,8 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+    - name: Download src data and convert json
       run: |
-        # pip install pytest
-        # pytest
-
         # DL参考 https://qiita.com/namakemono/items/c963e75e0af3f7eed732
         # ①検査件数等.xlsx
         wget "https://drive.google.com/uc?export=download&id=1dhjaRyKGFai_rOHjmdjrQq2rtpG5UKq8" -O inspections.xlsx
@@ -45,3 +42,8 @@ jobs:
 
         pip install -r requirements.txt
         python3 main.py
+    - name: Archive json
+      uses: actions/upload-artifact@v1
+      with:
+        name: data
+        path: data
